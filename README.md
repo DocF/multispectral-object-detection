@@ -1,7 +1,7 @@
 # Multispectral-Object-Detection
 
 ## Intro
-Multispectral Object Detection with Yolov5 and Transformer
+Multispectral Object Detection with Transformer and Yolov5
 
 
 
