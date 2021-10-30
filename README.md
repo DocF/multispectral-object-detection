@@ -1,7 +1,7 @@
 # Multispectral-Object-Detection
 
 ## Intro
-Multispectral Object Detection with Yolov5
+Multispectral Object Detection with Yolov5 and Transformer
 
 
 
@@ -23,3 +23,15 @@ $ pip install -r requirements.txt
 
 
 ## Results
+
+|Dataset|CFT|mAP50|mAP75|mAP|
+|:---------: |------------|:-----:|:-----------------:|:-------------:|
+|FLIR||73.0|32.0|37.4|
+|FLIR| ✔️ |**77.7 (Δ4.7)**|**34.8 (Δ2.8)**|**40.0 (Δ2.6)**|
+|LLVIP||95.8|71.4|62.3|
+|LLVIP| ✔️ |**97.5 (Δ1.7)**|**72.9 (Δ1.5)**|**63.6 (Δ1.3)**|
+|VEDAI||79.7 | 47.7  | 46.8
+|VEDAI| ✔️ |**85.3 (Δ5.6)**|**65.9(Δ18.2)**|**56.0 (Δ9.2)**|
+
+
+  
