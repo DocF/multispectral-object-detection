@@ -17,6 +17,16 @@ $ cd  multispectral-object-detection
 $ pip install -r requirements.txt
 ```
 
+## Dataset
+-[FLIR]  [download](http://shorturl.at/ahAY4) A new aligned version.
+
+-[LLVIP]  [download](https://github.com/bupt-ai-cz/LLVIP)
+
+-[VEDAI]  [download](https://downloads.greyc.fr/vedai/)
+
+
+
+
 ### Download the pretrained weights
 
 
