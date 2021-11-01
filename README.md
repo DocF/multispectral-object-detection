@@ -31,11 +31,17 @@ yolov5 weights:
 CFT weights:
 
 ### Add the some file 
-create *runs/train*, *runs/test* and *runs/detect* three files for save the results.
+create ```runs/train, runs/test and runs/detect``` three files for save the results.
 
 ### Change the data cfg
 some example in data/multispectral/
 
+### Train Test and Detect
+train: ``` python train.py```
+
+test: ``` python test.py```
+
+detect: ``` python detect_twostream.py```
 
 ## Results
 
