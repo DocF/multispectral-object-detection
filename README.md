@@ -24,13 +24,16 @@ $ pip install -r requirements.txt
 
 -[VEDAI]  [download](https://downloads.greyc.fr/vedai/)
 
-
-## Download the pretrained weights
+## Run
+### Download the pretrained weights
 yolov5 weights:
 
 CFT weights:
 
-## Change the data cfg
+### Add the some file 
+create *runs/train*, *runs/test* and *runs/detect* three files for save the results.
+
+### Change the data cfg
 some example in data/multispectral/
 
 
