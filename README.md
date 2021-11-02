@@ -1,7 +1,21 @@
 # Multispectral-Object-Detection
 
 ## Intro
+Official Code for [Cross-Modality Fusion Transformer for Multispectral Object Detection](https://arxiv.org/abs/2111.00273).
+
 Multispectral Object Detection with Transformer and Yolov5
+
+## Citation
+If you use this repo for your research, please cite our paper:
+
+```
+@article{fang2021cross,
+  title={Cross-Modality Fusion Transformer for Multispectral Object Detection},
+  author={Fang Qingyun and Han Dapeng and Wang Zhaokui},
+  journal={arXiv preprint arXiv:2111.00273},
+  year={2021}
+}
+```
 
 
 
