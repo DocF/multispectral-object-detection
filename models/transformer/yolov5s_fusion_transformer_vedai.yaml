@@ -1,0 +1,102 @@
+# parameters
+nc: 9  # number of classes
+depth_multiple: 0.33  # model depth multiple
+width_multiple: 0.50  # layer channel multiple
+
+# anchors
+anchors:
+  - [10,13, 16,30, 33,23]   # P3/8
+  - [30,61, 62,45, 59,119]  # P4/16
+  - [116,90, 156,198, 373,326]  # P5/32
+
+# YOLOv5 backbone
+backbone:
+  # [from, number, module, args]
+  # Two Stream
+  [
+    ######### TransformerBlock One #############
+    # stream one
+    [-1, 1, Focus, [64, 3]],    # 0-P1/2
+    [-1, 1, Conv, [128, 3, 2]], # 1-P2/4
+    [-1, 3, C3, [128]],   # 2-P2/4
+    # stream two
+    [-4, 1, Focus, [64, 3]],    # 3-P1/2
+    [-1, 1, Conv, [128, 3, 2]], # 4-P2/4
+    [-1, 3, C3, [128]],   # 5-P2/4
+    # transformer fusion
+    [[2,5], 1, GPT, [128]], # 6-P2/4
+    [[2,6], 1, Add2, [128,0]],  # 7-P2/4 stream one:x+trans[0]
+    [[5,6], 1, Add2, [128,1]],  # 8-P2/4 stream two:x+trans[1]
+    
+    ######### TransformerBlock Two #############
+   # stream one
+    [7, 1, Conv, [256, 3, 2]],  # 9-P3/8
+    [-1, 9, C3, [256]],   # 10-P3/8
+   # stream two
+    [8, 1, Conv, [256, 3, 2]],  # 11-P3/8
+    [-1, 9, C3, [256]],   # 12-P3/8
+   # transformer fusion
+    [[10,12], 1, GPT, [256]],   # 13-P3/8
+    [[10,13], 1, Add2, [256,0]],    # 14-P3/8 stream one x+trans[0]
+    [[12,13], 1, Add2, [256,1]],    # 15-P3/8 stream two x+trans[1]
+
+
+   ######### TransformerBlock Three #############
+   # stream one
+    [14, 1, Conv, [512, 3, 2]],   # 16-P4/16
+    [-1, 9, C3, [512]],   # 17-P4/16
+   # stream two
+    [15, 1, Conv, [512, 3, 2]],   # 18-P4/16
+    [-1, 9, C3, [512]],   # 19-P4/16
+   # transformer fusion
+    [[17,19], 1, GPT, [512]],   # 20-P3/8
+    [[17,20], 1, Add2, [512,0]],    # 21-P3/8 stream one x+trans[0]
+    [[19,20], 1, Add2, [512,1]],    # 22-P3/8 stream two x+trans[1]
+
+
+    ######### TransformerBlock Four #############
+    # stream one
+    [-2, 1, Conv, [1024, 3, 2]],    # 23-P5/32
+    [-1, 1, SPP, [1024, [5, 9, 13]]],   # 24-P5/32
+    [-1, 3, C3, [1024, False]],   # 25-P5/32
+    # stream two
+    [22, 1, Conv, [1024, 3, 2]],    # 26-P5/32
+    [-1, 1, SPP, [1024, [5, 9, 13]]],   # 27-P5/32
+    [-1, 3, C3, [1024, False]],   # 28-P5/32
+    # transformer fusion
+    [[25,28], 1, GPT, [1024]],    # 29-P5/32
+    [[25,29], 1, Add2, [1024,0]],    # 30-P5/32 stream one x+trans[0]
+    [[28,29], 1, Add2, [1024,1]],    # 31-P5/32 stream two x+trans[1]
+
+
+    ######### Add Block #############
+    [[14,15], 1, Add, [1]],   # 32-P3/8 fusion backbone P3
+    [[21,22], 1, Add, [1]],   # 33-P4/16 fusion backbone P4
+    [[30,31], 1, Add, [1]],   # 34-P5/32 fusion backbone P5
+
+  ]
+
+
+# YOLOv5 head
+head:
+  [
+    [-1, 1, Conv, [512, 1, 1]],   # 35
+    [-1, 1, nn.Upsample, [None, 2, 'nearest']],   # 36
+    [[-1,33], 1, Concat, [1]],    # 37 cat backbone P4
+    [-1, 3, C3, [512, False]],    # 38
+
+    [-1, 1, Conv, [256, 1, 1]],   # 39
+    [-1, 1, nn.Upsample, [None, 2, 'nearest']],   # 40
+    [[-1,32], 1, Concat, [1]],    # 41 cat backbone P3
+    [-1, 3, C3, [256, False]],    # 42 (P3/8-small)
+
+    [-1, 1, Conv, [256, 3, 2]],   # 43
+    [[-1,39], 1, Concat, [1]],    # 44 cat head P4
+    [-1, 3, C3, [512, False]],    # 45 (P4/16-medium)
+
+    [-1, 1, Conv, [512, 3, 2]],    # 46
+    [[-1,35], 1, Concat, [1]],     # 47 cat head P5
+    [-1, 3, C3, [1024, False]],     # 48 (P5/32-large)
+
+    [[42, 45, 48], 1, Detect, [nc, anchors]],   # Detect(P3, P4, P5)
+  ]
