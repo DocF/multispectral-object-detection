@@ -26,10 +26,10 @@ If you use this repo for your research, please cite our paper:
 ## Installation 
 Python>=3.6.0 is required with all requirements.txt installed including PyTorch>=1.7 (The same as yolov5 https://github.com/ultralytics/yolov5 ).
 
-### Clone the repo
+#### Clone the repo
     git clone https://github.com/DocF/multispectral-object-detection
   
-### Install requirements
+#### Install requirements
  ```bash
 $ cd  multispectral-object-detection
 $ pip install -r requirements.txt
@@ -43,7 +43,7 @@ $ pip install -r requirements.txt
 -[VEDAI]  [download](https://downloads.greyc.fr/vedai/)
 
 ## Run
-### Download the pretrained weights
+#### Download the pretrained weights
 yolov5 weights (pre-train) 
 
 -[yolov5s] [google drive](https://drive.google.com/file/d/1UGAsaOvV7jVrk0RvFVYL6Vq0K7NQLD8H/view?usp=sharing)
@@ -58,11 +58,16 @@ CFT weights
 
 -[LLVIP] [google drive](https://drive.google.com/file/d/18yLDUOxNXQ17oypQ-fAV9OS9DESOZQtV/view?usp=sharing)
 
-### Add the some file 
+#### Add the some file 
 create ```runs/train, runs/test and runs/detect``` three files for save the results.
 
-### Change the data cfg
+#### Change the data cfg
 some example in data/multispectral/
+
+#### Change the model cfg
+some example in models/transformer/
+
+note!!!   we used xxxx_transfomerx3_dataset.yaml in our paper.
 
 ### Train Test and Detect
 train: ``` python train.py```
@@ -82,5 +87,8 @@ detect: ``` python detect_twostream.py```
 |VEDAI||79.7 | 47.7  | 46.8
 |VEDAI| ✔️ |**85.3 (Δ5.6)**|**65.9(Δ18.2)**|**56.0 (Δ9.2)**|
 
+#### References
+
+https://github.com/ultralytics/yolov5
 
   
