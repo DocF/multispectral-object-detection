@@ -44,9 +44,19 @@ $ pip install -r requirements.txt
 
 ## Run
 ### Download the pretrained weights
-yolov5 weights:
+yolov5 weights (pre-train) 
 
-CFT weights:
+-[yolov5s] [google drive](https://drive.google.com/file/d/1UGAsaOvV7jVrk0RvFVYL6Vq0K7NQLD8H/view?usp=sharing)
+
+-[yolov5m] [google drive](https://drive.google.com/file/d/1qB7L2vtlGppGjHp5xpXCKw14YHhbV4s1/view?usp=sharing)
+
+-[yolov5l] [google drive](https://drive.google.com/file/d/12OFGLF73CqTgOCMJAycZ8lB4eW19D0nb/view?usp=sharing)
+
+-[yolov5x] [google drive](https://drive.google.com/file/d/1e9xiQImx84KFQ_a7XXpn608I3rhRmKEn/view?usp=sharing)
+
+CFT weights 
+
+-[LLVIP] [google drive](https://drive.google.com/file/d/18yLDUOxNXQ17oypQ-fAV9OS9DESOZQtV/view?usp=sharing)
 
 ### Add the some file 
 create ```runs/train, runs/test and runs/detect``` three files for save the results.
