@@ -7,7 +7,9 @@ Multispectral Object Detection with Transformer and Yolov5
 
 ### Example
  ![Example](https://github.com/DocF/multispectral-object-detection/blob/main/example.png)
-
+ 
+### Overview
+ ![Network](https://github.com/DocF/multispectral-object-detection/blob/main/cft.png)
 
 ## Citation
 If you use this repo for your research, please cite our paper:
