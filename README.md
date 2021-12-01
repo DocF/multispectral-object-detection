@@ -3,6 +3,10 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cross-modality-fusion-transformer-for/multispectral-object-detection-on-flir)](https://paperswithcode.com/sota/multispectral-object-detection-on-flir?p=cross-modality-fusion-transformer-for)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cross-modality-fusion-transformer-for/pedestrian-detection-on-llvip)](https://paperswithcode.com/sota/pedestrian-detection-on-llvip?p=cross-modality-fusion-transformer-for)
+
+[![New](https://img.shields.io/badge/2021-NEW-brightgreen.svg)](https://github.com/DocF/multispectral-object-detection/)
+[![GitHub stars](https://img.shields.io/github/stars/DocF/multispectral-object-detection.svg?style=social&label=Stars)](https://github.com/DocF/multispectral-object-detection)
+
 ## Intro
 Official Code for [Cross-Modality Fusion Transformer for Multispectral Object Detection](https://arxiv.org/abs/2111.00273).
 
@@ -62,9 +66,6 @@ yolov5 weights (pre-train)
 CFT weights 
 
 -[LLVIP] [google drive](https://drive.google.com/file/d/18yLDUOxNXQ17oypQ-fAV9OS9DESOZQtV/view?usp=sharing)
-
-#### Add the some file 
-create ```runs/train, runs/test and runs/detect``` three files for save the results.
 
 #### Change the data cfg
 some example in data/multispectral/
