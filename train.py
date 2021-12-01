@@ -24,7 +24,7 @@ from tqdm import tqdm
 import test  # import test.py to get mAP after each epoch
 from models.experimental import attempt_load
 from models.yolo import Model
-from models.yolo_test import Model, TwoStreamModel
+from models.yolo_test import Model
 from utils.autoanchor import check_anchors
 from utils.datasets import create_dataloader, create_dataloader_rgb_ir # create_dual_dataloader,
 from utils.general import labels_to_class_weights, increment_path, labels_to_image_weights, init_seeds, \
@@ -528,8 +528,8 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
         check_dataset(data_dict)  # check
     train_path_rgb = data_dict['train_rgb']
     test_path_rgb = data_dict['val_rgb']
-    train_path_ir = data_dict['train_rgb']
-    test_path_ir = data_dict['val_rgb']
+    train_path_ir = data_dict['train_ir']
+    test_path_ir = data_dict['val_ir']
 
     # Freeze
     freeze = []  # parameter names to freeze (full or partial)
@@ -620,13 +620,6 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
         logger.info('Using SyncBatchNorm()')
 
     # Trainloader
-    # train_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/color/fold01.txt"
-    # train_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/ir/fold01.txt"
-    # train_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/train/yolo/ir/train.txt"
-    # train_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/align/yolo/ir/align_train.txt"
-    # train_path_ir = "/home/fqy/DATA/LLVIP/infrared/train.txt"
-    # train_path_ir = "/home/fqy/Data/KAIST/lwir/train.txt"
-
     dataloader, dataset = create_dataloader_rgb_ir(train_path_rgb, train_path_ir, imgsz, batch_size, gs, opt,
                                             hyp=hyp, augment=True, cache=opt.cache_images, rect=opt.rect, rank=rank,
                                             world_size=opt.world_size, workers=opt.workers,
@@ -638,13 +631,6 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
 
     # Process 0
     if rank in [-1, 0]:
-        # test_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/color/fold01test.txt"
-        # test_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/ir/fold01test.txt"
-        # test_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/val/yolo/ir/val.txt"
-        # test_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/align/yolo/ir/align_validation.txt"
-        # test_path_ir = "/home/fqy/DATA/LLVIP/infrared/test.txt"
-        # test_path_ir = "/home/fqy/Data/KAIST/lwir/val.txt"
-
         testloader, testdata = create_dataloader_rgb_ir(test_path_rgb, test_path_ir,imgsz_test, batch_size * 2, gs, opt,  # testloader
                                        hyp=hyp, cache=opt.cache_images and not opt.notest, rect=True, rank=-1,
                                        world_size=opt.world_size, workers=opt.workers,
@@ -698,7 +684,6 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
         model.train()
 
-
         # Update image weights (optional)
         if opt.image_weights:
             # Generate indices
@@ -732,7 +717,7 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
             imgs_ir = imgs[:, 3:, :, :]
 
             # FQY my code 训练数据可视化
-            flage_visual = global_var.get_value('flage_visual_training_dataset')
+            flage_visual = global_var.get_value('flag_visual_training_dataset')
             if flage_visual:
                 from torchvision import transforms
                 unloader = transforms.ToPILImage()
@@ -931,8 +916,8 @@ def train_rgb_ir(hyp, opt, device, tb_writer=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default='yolov5l.pt', help='initial weights path')
-    parser.add_argument('--cfg', type=str, default='./models/transformer/yolov5l_fusion_add_llvip.yaml', help='model.yaml path')
-    parser.add_argument('--data', type=str, default='./data/LLVIP.yaml', help='data.yaml path')
+    parser.add_argument('--cfg', type=str, default='./models/transformer/yolov5l_fusion_add_FLIR_aligned.yaml', help='model.yaml path')
+    parser.add_argument('--data', type=str, default='./data/multispectral/FLIR_aligned.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')
@@ -966,12 +951,9 @@ if __name__ == '__main__':
     parser.add_argument('--artifact_alias', type=str, default="latest", help='version of dataset artifact to be used')
     opt = parser.parse_args()
 
-    # FQY
+    # FQY  Flag for visualizing the paired training imgs
     global_var._init()
-    global_var.set_value('flage_visual_training_dataset', False)
-    global_var.set_value('flage_dualmodal', True)
-    # global_var.set_value('mosica_random_seed', 0)
-    flage_dualmodal = global_var.get_value('flage_dualmodal')
+    global_var.set_value('flag_visual_training_dataset', False)
 
 
     # Set DDP variables
@@ -1024,10 +1006,9 @@ if __name__ == '__main__':
             prefix = colorstr('tensorboard: ')
             logger.info(f"{prefix}Start with 'tensorboard --logdir {opt.project}', view at http://localhost:6006/")
             tb_writer = SummaryWriter(opt.save_dir)  # Tensorboard
-        if flage_dualmodal:
+
             train_rgb_ir(hyp, opt, device, tb_writer)
-        else:
-            train(hyp, opt, device, tb_writer)
+
 
 
     # Evolve hyperparameters (optional)

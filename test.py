@@ -34,7 +34,7 @@ def test(data,
          save_txt=False,  # for auto-labelling
          save_hybrid=False,  # for hybrid auto-labelling
          save_conf=True,  # save auto-label confidences
-         plots=True,
+         plots=False,
          wandb_logger=None,
          compute_loss=None,
          half_precision=True,
@@ -88,22 +88,10 @@ def test(data,
         #     model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
         print(opt.task)
         task = opt.task if opt.task in ('train', 'val', 'test') else 'val'  # path to train/val/test images
-        # dataloader = create_dataloader(data[task], imgsz, batch_size, gs, opt, pad=0.5, rect=True,
-        #                                prefix=colorstr(f'{task}: '))[0]
         val_path_rgb = data['val_rgb']
         val_path_ir = data['val_ir']
         dataloader = create_dataloader_rgb_ir(val_path_rgb, val_path_ir, imgsz, batch_size, gs, opt, pad=0.5, rect=True,
                                        prefix=colorstr(f'{task}: '))[0]
-        # print(data[task])
-        # # test_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/val/yolo/ir/val.txt"
-        # # test_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/ir/fold01test.txt"
-        # # test_path_ir = "/home/fqy/Data/vedai/Vehicules1024/Images/color/fold01test.txt"
-        # test_path_ir = "/home/fqy/DATA/LLVIP/infrared/test.txt"
-        # # test_path_ir = "/home/fqy/Data/KAIST/lwir/val.txt"
-        # # test_path_ir = "/home/fqy/Data/FLIR_ADAS_1_3/align/yolo/ir/align_validation.txt"
-        #
-        # testloader, testdata = create_dataloader_rgb_ir(data[task], test_path_ir, imgsz, batch_size, gs, opt,
-        #                                                 rect=True, pad=0.5, prefix=colorstr(f'{task}: '))
 
     seen = 0
     confusion_matrix = ConfusionMatrix(nc=nc)
@@ -254,7 +242,7 @@ def test(data,
     # Print results per class
     if (verbose or (nc < 50 and not training)) and nc > 1 and len(stats):
         for i, c in enumerate(ap_class):
-            print(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+            print(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap75[i], ap[i]))
 
     # Print speeds
     t = tuple(x / seen * 1E3 for x in (t0, t1, t0 + t1)) + (imgsz, imgsz, batch_size)  # tuple
@@ -309,10 +297,10 @@ def test(data,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='/home/fqy/proj/paper/YOLOFusion/runs/train/tranasformer/yolov5l_fusion_transformerx3_llvip_s1024_bs32_e200/weights/best.pt', help='model.pt path(s)')
-    parser.add_argument('--data', type=str, default='./data/LLVIP.yaml', help='*.data path')
+    parser.add_argument('--weights', nargs='+', type=str, default='/home/fqy/proj/multispectral-object-detection/best.pt', help='model.pt path(s)')
+    parser.add_argument('--data', type=str, default='./data/multispectral/FLIR_aligned.yaml', help='*.data path')
     parser.add_argument('--batch-size', type=int, default=64, help='size of each image batch')
-    parser.add_argument('--img-size', type=int, default=1024, help='inference size (pixels)')
+    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.5, help='IOU threshold for NMS')
     parser.add_argument('--task', default='val', help='train, val, test, speed or study')

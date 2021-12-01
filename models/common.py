@@ -18,7 +18,7 @@ from utils.general import non_max_suppression, make_divisible, scale_coords, inc
 from utils.plots import colors, plot_one_box
 from utils.torch_utils import time_synchronized
 
-import utils.gradcam as gradcam
+from torch.nn import init, Sequential
 
 
 def autopad(k, p=None):  # kernel, padding
@@ -426,7 +426,7 @@ class Classify(nn.Module):
         z = torch.cat([self.aap(y) for y in (x if isinstance(x, list) else [x])], 1)  # cat if list
         return self.flat(self.conv(z))  # flatten to x(b,c2)
 
-from torch.nn import init, Sequential
+
 class SelfAttention(nn.Module):
     """
      Multi-head masked self-attention layer
@@ -549,15 +549,9 @@ class myTransformerBlock(nn.Module):
 class GPT(nn.Module):
     """  the full GPT language model, with a context size of block_size """
 
-
     def __init__(self, d_model, h=8, block_exp=4,
                  n_layer=8, vert_anchors=8, horz_anchors=8,
                  embd_pdrop=0.1, attn_pdrop=0.1, resid_pdrop=0.1):
-
-    # def __init__(self, d_model, d_k, d_v, h, block_exp,
-    #              n_layer, vert_anchors, horz_anchors,
-    #              embd_pdrop, attn_pdrop, resid_pdrop):
-
         super().__init__()
 
         self.n_embd = d_model
