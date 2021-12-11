@@ -94,6 +94,10 @@ detect: ``` python detect_twostream.py```
 |LLVIP| ✔️ |**97.5 (Δ1.7)**|**72.9 (Δ1.5)**|**63.6 (Δ1.3)**|
 |VEDAI||79.7 | 47.7  | 46.8
 |VEDAI| ✔️ |**85.3 (Δ5.6)**|**65.9(Δ18.2)**|**56.0 (Δ9.2)**|
+ 
+<div align="left">
+<img src="https://github.com/DocF/multispectral-object-detection/blob/main/MR.png" width="500">
+</div>
 
 #### References
 
