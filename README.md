@@ -15,10 +15,14 @@ Official Code for [Cross-Modality Fusion Transformer for Multispectral Object De
 Multispectral Object Detection with Transformer and Yolov5
 
 ### Example
- ![Example](https://github.com/DocF/multispectral-object-detection/blob/main/example.png)
+<div align="left">
+<img src="https://github.com/DocF/multispectral-object-detection/blob/main/example.png" width="600">
+</div>
  
 ### Overview
- ![Network](https://github.com/DocF/multispectral-object-detection/blob/main/cft.png)
+<div align="left">
+<img src="https://github.com/DocF/multispectral-object-detection/blob/main/cft.png" width="800">
+</div>
 
 ## Citation
 If you use this repo for your research, please cite our paper:
