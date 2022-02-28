@@ -70,6 +70,11 @@ $ pip install -r requirements.txt
 
 -[VEDAI]  [download](https://downloads.greyc.fr/vedai/)
 
+
+You need to convert all annotations to YOLOv5 format.
+
+Refer: https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data
+
 ## Run
 #### Download the pretrained weights
 yolov5 weights (pre-train) 
