@@ -91,6 +91,8 @@ CFT weights
 
 -[LLVIP] [google drive](https://drive.google.com/file/d/18yLDUOxNXQ17oypQ-fAV9OS9DESOZQtV/view?usp=sharing)
 
+-[FLIR] [google drive](https://drive.google.com/drive/folders/1i9NuSTn3oMcGVT11fbK-vIPKj-3fdQUH?usp=sharing)
+
 #### Change the data cfg
 some example in data/multispectral/
 
