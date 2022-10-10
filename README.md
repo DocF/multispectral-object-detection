@@ -64,7 +64,9 @@ $ pip install -r requirements.txt
 ```
 
 ## Dataset
--[FLIR]  [download](http://shorturl.at/ahAY4) A new aligned version.
+-[FLIR]  [[Google Drive]](http://shorturl.at/ahAY4) [[Baidu Drive]](https://pan.baidu.com/s/1z2GHVD3WVlGsVzBR1ajSrQ?pwd=qwer) ```extraction code:qwer``` 
+
+  A new aligned version.
 
 -[LLVIP]  [download](https://github.com/bupt-ai-cz/LLVIP)
 
