@@ -41,6 +41,15 @@ Extensive experiments and ablation studies on multiple datasets demonstrate that
 If you use this repo for your research, please cite our paper:
 
 ```
+@article{qingyun2022cross,
+  title={Cross-modality attentive feature fusion for object detection in multispectral remote sensing imagery},
+  author={Qingyun, Fang and Zhaokui, Wang},
+  journal={Pattern Recognition},
+  volume={130},
+  pages={108786},
+  year={2022},
+  publisher={Elsevier}
+}
 @article{fang2021cross,
   title={Cross-Modality Fusion Transformer for Multispectral Object Detection},
   author={Fang Qingyun and Han Dapeng and Wang Zhaokui},
